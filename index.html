@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengaduan Sarana - MAN 2 Kediri</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#1d4ed8', light: '#3b82f6', dark: '#1e3a8a' },
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white shadow-lg">
+    <div class="max-w-3xl mx-auto px-4 py-5 flex items-center gap-4">
+      <div class="bg-white rounded-full p-2 flex-shrink-0">
+        <svg class="w-10 h-10 text-blue-800" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-xl md:text-2xl font-bold leading-tight">Pengaduan Sarana Sekolah</h1>
+        <p class="text-blue-200 text-sm font-medium">MAN 2 Kediri</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-3xl mx-auto px-4 py-8">
+
+    <!-- INFO CARD -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 flex gap-3">
+      <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+      </svg>
+      <p class="text-blue-800 text-sm">Sampaikan pengaduan sarana dan prasarana sekolah melalui formulir ini. Laporan akan ditindaklanjuti oleh pihak sekolah.</p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-8">
+      <form id="pengaduanForm" novalidate>
+
+        <!-- Nama Pengadu -->
+        <div class="mb-5">
+          <label class="form-label" for="namaPengadu">Nama Pengadu <span class="text-gray-400 font-normal text-xs">(opsional)</span></label>
+          <input type="text" id="namaPengadu" name="namaPengadu"
+            class="form-input" placeholder="Kosongkan jika ingin anonim" />
+        </div>
+
+        <!-- Nama Kelas -->
+        <div class="mb-5">
+          <label class="form-label" for="namaKelas">Nama Kelas <span class="text-red-500">*</span></label>
+          <input type="text" id="namaKelas" name="namaKelas"
+            class="form-input" placeholder="Contoh: X IPA 3, XI IPS 2, XII MIPA 1" required />
+          <p class="error-msg hidden" id="err-namaKelas">Nama kelas wajib diisi.</p>
+        </div>
+
+        <!-- Kategori Sarana -->
+        <div class="mb-5">
+          <label class="form-label" for="kategori">Kategori Sarana <span class="text-red-500">*</span></label>
+          <select id="kategori" name="kategori" class="form-input" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Ruang Kelas">Ruang Kelas</option>
+            <option value="Toilet / Kamar Mandi">Toilet / Kamar Mandi</option>
+            <option value="Lapangan Olahraga">Lapangan Olahraga</option>
+            <option value="Laboratorium">Laboratorium</option>
+            <option value="Perpustakaan">Perpustakaan</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+          <p class="error-msg hidden" id="err-kategori">Kategori wajib dipilih.</p>
+        </div>
+
+        <!-- Sub-masalah -->
+        <div id="subMasalahContainer" class="mb-5 hidden">
+          <label class="form-label">Sub-Masalah <span class="text-gray-400 font-normal text-xs">(pilih yang sesuai)</span></label>
+          <div id="subMasalahList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2"></div>
+          <!-- Input lainnya -->
+          <div id="lainnyaInputContainer" class="hidden mt-3">
+            <input type="text" id="lainnyaInput" class="form-input" placeholder="Jelaskan masalah lainnya..." />
+          </div>
+        </div>
+
+        <!-- Tingkat Urgensi -->
+        <div class="mb-5">
+          <label class="form-label">Tingkat Urgensi <span class="text-red-500">*</span></label>
+          <div class="flex flex-wrap gap-3 mt-2">
+            <label class="urgensi-option" data-value="Ringan">
+              <input type="radio" name="urgensi" value="Ringan" class="sr-only" required />
+              <span class="urgensi-badge bg-green-100 text-green-700 border-green-300">🟢 Ringan</span>
+            </label>
+            <label class="urgensi-option" data-value="Sedang">
+              <input type="radio" name="urgensi" value="Sedang" class="sr-only" />
+              <span class="urgensi-badge bg-yellow-100 text-yellow-700 border-yellow-300">🟡 Sedang</span>
+            </label>
+            <label class="urgensi-option" data-value="Mendesak">
+              <input type="radio" name="urgensi" value="Mendesak" class="sr-only" />
+              <span class="urgensi-badge bg-red-100 text-red-700 border-red-300">🔴 Mendesak</span>
+            </label>
+          </div>
+          <p class="error-msg hidden" id="err-urgensi">Tingkat urgensi wajib dipilih.</p>
+        </div>
+
+        <!-- Lokasi Detail -->
+        <div class="mb-5">
+          <label class="form-label" for="lokasi">Lokasi Detail <span class="text-red-500">*</span></label>
+          <input type="text" id="lokasi" name="lokasi"
+            class="form-input" placeholder="Contoh: Kelas XI IPA 1, Lantai 2, Toilet Lantai 3" required />
+          <p class="error-msg hidden" id="err-lokasi">Lokasi detail wajib diisi.</p>
+        </div>
+
+        <!-- Deskripsi Masalah -->
+        <div class="mb-5">
+          <label class="form-label" for="deskripsi">Deskripsi Masalah <span class="text-red-500">*</span></label>
+          <textarea id="deskripsi" name="deskripsi" rows="4"
+            class="form-input resize-none" placeholder="Jelaskan masalah secara detail..." required></textarea>
+          <p class="error-msg hidden" id="err-deskripsi">Deskripsi masalah wajib diisi.</p>
+        </div>
+
+        <!-- Upload Foto -->
+        <div class="mb-6">
+          <label class="form-label">Foto Pendukung <span class="text-gray-400 font-normal text-xs">(opsional, maks. 5 foto)</span></label>
+          <div id="dropzone"
+            class="border-2 border-dashed border-blue-300 rounded-xl p-6 text-center cursor-pointer hover:bg-blue-50 transition-colors">
+            <svg class="w-10 h-10 text-blue-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-blue-600 font-medium text-sm">Klik atau seret foto ke sini</p>
+            <p class="text-gray-400 text-xs mt-1">JPG, PNG, WEBP — maks. 5MB per foto</p>
+            <input type="file" id="fotoInput" accept="image/*" multiple class="hidden" />
+          </div>
+          <div id="fotoPreview" class="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn"
+          class="w-full bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 text-base">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+          Kirim Pengaduan
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- SUCCESS MODAL -->
+  <div id="successModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden px-4">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center animate-bounce-in">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-9 h-9 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 mb-2">Pengaduan Terkirim!</h2>
+      <p class="text-gray-500 text-sm mb-4">Nomor pengaduan Anda:</p>
+      <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-5">
+        <span id="nomorPengaduan" class="text-blue-800 font-bold text-lg tracking-widest"></span>
+      </div>
+      <p class="text-gray-500 text-xs mb-6">Simpan nomor ini untuk memantau tindak lanjut pengaduan Anda.</p>
+      <button id="closeModal"
+        class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-xl transition-colors">
+        Tutup
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl">
+      <div class="spinner"></div>
+      <p class="text-gray-700 font-medium">Mengirim pengaduan...</p>
+    </div>
+  </div>
+
+  <footer class="text-center text-gray-400 text-xs py-6">
+    &copy; 2025 MAN 2 Kediri — Sistem Pengaduan Sarana Sekolah
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
